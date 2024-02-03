@@ -1,0 +1,71 @@
+{
+    "version": 5,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 20,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "all-base",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/bin/${presetName}"
+            }
+        },
+        {
+            "name": "macos-base",
+            "inherits": "all-base",
+            "hidden": true,
+            "cacheVariables": {
+                "CMAKE_OSX_ARCHITECTURES": "arm64;x86_64"
+            }
+        },
+        {
+            "name": "macos-debug",
+            "displayName": "macOS Universal Debug",
+            "inherits": "macos-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "RADISH_ENABLE_ASSERTIONS": true
+            }
+        },
+        {
+            "name": "macos-development",
+            "displayName": "macOS Universal Development",
+            "inherits": "macos-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                "RADISH_ENABLE_ASSERTIONS": true
+            }
+        },
+        {
+            "name": "macos-release",
+            "displayName": "macOS Universal Release",
+            "inherits": "macos-base",
+            "generator": "Xcode",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "macos-debug",
+            "displayName": "macOS Universal Debug",
+            "configurePreset": "macos-debug"
+        },
+        {
+            "name": "macos-development",
+            "displayName": "macOS Universal Development",
+            "configurePreset": "macos-development"
+        },
+        {
+            "name": "macos-release",
+            "displayName": "macOS Universal Release",
+            "configurePreset": "macos-release"
+        }
+    ]
+}
