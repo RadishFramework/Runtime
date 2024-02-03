@@ -23,13 +23,14 @@ if (NOT DEFINED RADISH_ENABLE_ASSERTIONS)
     set(RADISH_ENABLE_ASSERTIONS OFF)
 endif()
 
-find_package(SDL2 CONFIG REQUIRED)
+if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU" OR "Clang")
+    add_compile_options("-fno-rtti" "-fno-exceptions -Wall -Wextra -Wno-unused")
+endif()
 
 message(STATUS "*** Radish Configuration ***")
 message(STATUS "* Assertions: ${RADISH_ENABLE_ASSERTIONS}")
 message(STATUS "* LTO: ${CMAKE_INTERPROCEDURAL_OPTIMIZATION}")
-message(STATUS "* SDL2 include paths: ${SDL2_INCLUDE_DIRS}")
-message(STATUS "* SDL2 include libs: ${SDL2_LIBRARIES}")
 message(STATUS "*** End Radish Configuration ***")
 
+add_subdirectory("vendor")
 add_subdirectory("src")
