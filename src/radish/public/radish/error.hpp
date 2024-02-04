@@ -1,6 +1,7 @@
 #pragma once
 
 #include "radish.hpp"
+#include <cassert>
 
 namespace radish {
 
@@ -14,32 +15,44 @@ struct error final {
 
     /// @brief Creates a successful error object.
     /// @param success The success object.
-    constexpr error(TSuccess success) : _value(success), _success(true) {
+    constexpr error(TSuccess success) : _value(std::move(success)), _success(true) {
     }
+
+    // error(TSuccess&& success) : _value(std::move(success)), _success(true) {
+    // }
 
     /// @brief Creates a failed error object.
     /// @param failure The failure object.
-    constexpr error(TFailure failure) : _value(failure), _success(false) {
-        _value.failure = failure;
+    constexpr error(TFailure failure) : _value(std::move(failure)), _success(false) {
     }
+
+    // constexpr error(TFailure&& failure) : _value(std::move(failure)), _success(false) {
+    // }
 
     /// @brief Gets the successful value. Asserts if this error was a failure case.
     /// @return The success value.
     [[nodiscard]]
-    constexpr TSuccess value() const { 
-        if (failed())
-            return TSuccess{};
+    constexpr TSuccess& value() { 
+        assert(!failed());
+        return _value.success;
+    }
 
+    [[nodiscard]]
+    constexpr const TSuccess& value() const { 
+        assert(!failed());
         return _value.success;
     }
 
     /// @brief Gets the failure value. Asserts of this error was not a failure.
     /// @return The failure value.
     [[nodiscard]]
-    constexpr TFailure failure() const {
-        if (!failed())
-            return TFailure{};
+    constexpr TFailure& failure() {
+        assert(failed());
+        return _value.failure;
+    }
 
+    constexpr const TFailure& failure() const {
+        assert(failed());
         return _value.failure;
     }
 
@@ -53,8 +66,9 @@ private:
         TSuccess success;
         TFailure failure;
 
-        value(TSuccess success) : success(success) {}
-        value(TFailure failure) : failure(failure) {}
+        value(TSuccess&& success) : success(std::move(success)) {}
+        value(TFailure&& failure) : failure(std::move(failure)) {}
+
         ~value() {}
     } _value;
 

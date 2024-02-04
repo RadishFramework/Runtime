@@ -12,12 +12,12 @@ application::create_error application::create(const init_params& initParams) {
         return create_error{SDL_GetError()};
     }
 
-    auto* app = new application(initParams, window);
+    auto app = std::unique_ptr<application>(new application(initParams, window));
 
-    return create_error{app};
+    return create_error{std::move(app)};
 }
 
-application::application(const init_params& initParams, SDL_Window* window) : _window(window) {
+application::application(const init_params& initParams, SDL_Window* window) : _window(window), _basePath(SDL_GetBasePath()) {
     _args.reserve(initParams.argc);
     for (auto i = 0; i < initParams.argc; ++i) {
         _args.emplace_back(initParams.argv[i]);
@@ -40,6 +40,22 @@ application::~application() {
     if (_window) {
         SDL_DestroyWindow(_window);
         _window = nullptr;
+    }
+}
+
+bool application::isRunning() const {
+    return _isRunning && _window != nullptr;
+}
+
+void application::runFrame() {
+    pollEvents();
+}
+
+void application::pollEvents() {
+    SDL_Event ev{};
+    while (SDL_PollEvent(&ev)) {
+        if (ev.type == SDL_QUIT)
+            _isRunning = false;
     }
 }
 

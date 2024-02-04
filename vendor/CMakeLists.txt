@@ -7,3 +7,5 @@ set(SDL2_INCLUDE_DIRS "SDL/include")
 
 set(FMT_INSTALL OFF)
 add_subdirectory("fmt")
+
+add_subdirectory("wasmtime")
