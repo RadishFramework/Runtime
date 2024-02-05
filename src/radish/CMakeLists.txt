@@ -2,6 +2,7 @@ set(Radish_Public_SRCS
 "public/radish.hpp"
 "public/radish/application.hpp"
 "public/radish/error.hpp"
+"public/radish/source_location.hpp"
 "public/radish/type_id.hpp"
 "public/radish/vm.hpp"
 )
