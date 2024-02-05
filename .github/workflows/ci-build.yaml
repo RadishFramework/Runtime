@@ -1,0 +1,48 @@
+name: Continuous Integration Build
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '.vscode/*'
+      - '.gitignore'
+      - '.gitmodules'
+      - 'vcpkg.json'
+      - 'LICENSE'
+    branches: [ "main", "feature/*" ]
+  pull_request:
+    branches: [ "main", "release", "feature/*" ]
+env:
+  RADISH_CI_BUILD: 1
+jobs:
+  build-windows:
+    strategy:
+      fail-fast: false
+    name: Build Windows x64
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Run make script
+        run: cmd /c make_release_win64.cmd
+      - uses: actions/upload-artifact@v4
+        with:
+          name: win64-development
+          path: bin/win64-development
+  build-macos:
+    name: Build macOS Universal
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Install required packages
+        run: brew install imagemagick ninja
+      - name: Run make script
+        run: make_release_macos.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-development
+          path: bin/macos-development
