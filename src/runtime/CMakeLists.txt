@@ -20,7 +20,7 @@ add_dependencies(RadishRuntime hermesc)
 
 set(Runtime_LIBS_TO_FIX
 libhermes
-SDL2::SDL2
+SDL2
 )
 
 # Set up custom installation behaviour for macOS
