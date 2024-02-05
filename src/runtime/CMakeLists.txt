@@ -48,7 +48,8 @@ if (APPLE)
     install(CODE "execute_process(COMMAND codesign -s \"-\" --deep $<TARGET_FILE_BASE_NAME:RadishRuntime>.app WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX})")
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
-    install(DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" .)
+    install(TARGETS ${Runtime_LIBS_TO_FIX} DESTINATION .)
+    install(TARGETS hermesc DESTINATION .)
 
     configure_file("windows/radish.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/radish.rc" @ONLY)
     target_sources(RadishRuntime PRIVATE "windows/app.manifest" "${CMAKE_CURRENT_BINARY_DIR}/radish.rc")
