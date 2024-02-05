@@ -18,6 +18,8 @@ set_target_properties(RadishRuntime PROPERTIES
 # We use hermesc to compile js code
 add_dependencies(RadishRuntime hermesc)
 
+install(TARGETS RadishRuntime DESTINATION .)
+
 set(Runtime_LIBS_TO_FIX
 libhermes
 SDL2
@@ -33,8 +35,6 @@ if (APPLE)
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     )
 
-    install(TARGETS RadishRuntime DESTINATION .)
-
     # Copy dylibs to Frameworks/
     foreach(_LIB ${Runtime_LIBS_TO_FIX})
         install(FILES "$<TARGET_FILE:${_LIB}>" DESTINATION "$<TARGET_FILE_BASE_NAME:RadishRuntime>.app/Contents/Frameworks")
@@ -48,7 +48,9 @@ if (APPLE)
     install(CODE "execute_process(COMMAND codesign -s \"-\" --deep $<TARGET_FILE_BASE_NAME:RadishRuntime>.app WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX})")
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
-    install(TARGETS ${Runtime_LIBS_TO_FIX} DESTINATION .)
+    foreach(_LIB ${Runtime_LIBS_TO_FIX})
+        install(FILES "$<TARGET_FILE:${_LIB}>" DESTINATION .)
+    endforeach()
     install(TARGETS hermesc DESTINATION .)
 
     configure_file("windows/radish.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/radish.rc" @ONLY)
