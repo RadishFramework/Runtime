@@ -18,15 +18,13 @@ set_target_properties(RadishRuntime PROPERTIES
 # We use hermesc to compile js code
 add_dependencies(RadishRuntime hermesc)
 
-install(TARGETS RadishRuntime DESTINATION .)
+set(Runtime_LIBS_TO_FIX
+libhermes
+SDL2::SDL2
+)
 
 # Set up custom installation behaviour for macOS
 if (APPLE)
-    set(Runtime_LIBS_TO_FIX
-        libhermes
-        SDL2::SDL2
-    )
-
     get_target_property(bundlePath RadishRuntime RUNTIME_OUTPUT_DIRECTORY)
 
     add_custom_command(TARGET RadishRuntime
@@ -34,6 +32,8 @@ if (APPLE)
         COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/macos/make-macos-icon.sh" "${CMAKE_CURRENT_SOURCE_DIR}/radish.svg" "${bundlePath}/RadishRuntime.app/Contents/Resources" "${CMAKE_CURRENT_BINARY_DIR}"
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     )
+
+    install(TARGETS RadishRuntime DESTINATION .)
 
     # Copy dylibs to Frameworks/
     foreach(_LIB ${Runtime_LIBS_TO_FIX})
@@ -47,6 +47,8 @@ if (APPLE)
     # TODO: use provided codesign credentials if available
     install(CODE "execute_process(COMMAND codesign -s \"-\" --deep $<TARGET_FILE_BASE_NAME:RadishRuntime>.app WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX})")
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+
+    install(DIRECTORY "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" .)
 
     configure_file("windows/radish.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/radish.rc" @ONLY)
     target_sources(RadishRuntime PRIVATE "windows/app.manifest" "${CMAKE_CURRENT_BINARY_DIR}/radish.rc")

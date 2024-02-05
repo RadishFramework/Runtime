@@ -1,6 +1,6 @@
 #pragma once
 
-namespace m3d {
+namespace radish {
 
 namespace detail {
 

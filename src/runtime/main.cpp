@@ -1,4 +1,5 @@
 #include "radish/application.hpp"
+#include "radish/logging.hpp"
 
 #include <SDL2/SDL.h>
 
@@ -10,13 +11,14 @@ int run(int argc, char* argv[]) {
     });
 
     if (appInit.failed()) {
-        fmt::println("application::create failed: {}", appInit.failure());
+        RADISH_LOG(LogLevel::Error, "application::create failed: {}", appInit.failure());
         return 1;
     }
 
     auto app = std::move(appInit.value());
-    while (app->isRunning())
+    while (app->isRunning()) {
         app->runFrame();
+    }
 
     return 0;
 }
@@ -26,10 +28,10 @@ int run(int argc, char* argv[]) {
 int main(int argc, char* argv[]) {
     SDL_version v{};
     SDL_GetVersion(&v);
-    fmt::println("SDL version: {}.{}.{}", v.major, v.minor, v.patch);
+    RADISH_LOG(radish::LogLevel::Info, "SDL version: {}.{}.{}", v.major, v.minor, v.patch);
 
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-        fmt::println("SDL_Init failed: {}", SDL_GetError());
+        RADISH_LOG(radish::LogLevel::Info, "SDL_Init failed: {}", SDL_GetError());
         return 1;
     }
 

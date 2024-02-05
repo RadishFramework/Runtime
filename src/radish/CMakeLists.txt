@@ -2,6 +2,7 @@ set(Radish_Public_SRCS
 "public/radish.hpp"
 "public/radish/application.hpp"
 "public/radish/error.hpp"
+"public/radish/logging.hpp"
 "public/radish/source_location.hpp"
 "public/radish/type_id.hpp"
 "public/radish/vm.hpp"
@@ -9,6 +10,7 @@ set(Radish_Public_SRCS
 
 set(Radish_Private_SRCS
 "private/application.cpp"
+"private/logging.cpp"
 "private/vm.cpp"
 )
 

@@ -1,4 +1,5 @@
 #include "radish/application.hpp"
+#include "radish/logging.hpp"
 
 #include "SDL2/SDL.h"
 
@@ -13,6 +14,8 @@ application::create_error application::create(const init_params& initParams) {
     }
 
     auto app = std::unique_ptr<application>(new application(initParams, window));
+
+    RADISH_LOG(LogLevel::Info, "Application initialized");
 
     return create_error{std::move(app)};
 }
@@ -37,6 +40,8 @@ application::application(const init_params& initParams, SDL_Window* window) : _w
 }
 
 application::~application() {
+    RADISH_LOG(LogLevel::Info, "Destroying application");
+
     if (_window) {
         SDL_DestroyWindow(_window);
         _window = nullptr;

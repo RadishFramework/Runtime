@@ -43,11 +43,11 @@ private:
 };
 
 #if defined(__GNUC__) || defined(__clang__)
-#define SOURCE_LOC_HERE source_location{__FILE__, __PRETTY_FUNCTION__, __LINE__, 1}
+#define SOURCE_LOC_HERE radish::source_location(__FILE__, __PRETTY_FUNCTION__, __LINE__, 1)
 #elif defined(__MSC_VER)
-#define SOURCE_LOC_HERE source_location{__FILE__, __FUNCTION__, __LINE__, 1}
+#define SOURCE_LOC_HERE radish::source_location(__FILE__, __FUNCTION__, __LINE__, 1)
 #else
-#define SOURCE_LOC_HERE source_location{__FILE__, __func__, __LINE__, 1}
+#define SOURCE_LOC_HERE radish::source_location(__FILE__, __func__, __LINE__, 1})
 #endif
 
 }
