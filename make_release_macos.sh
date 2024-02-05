@@ -7,6 +7,6 @@ if [ "$RADISH_CI_BUILD" == "1" ]; then
 BUILD_TYPE="macos-development"
 fi
 
-cmake --preset $BUILD_TYPE
+cmake --preset $BUILD_TYPE $@
 cmake --build --preset  $BUILD_TYPE --target RadishRuntime
 cmake --install build/$BUILD_TYPE
