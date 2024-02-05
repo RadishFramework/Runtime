@@ -46,8 +46,8 @@ jobs:
       - name: Run make script
         run: ./make_release_macos.sh -DCMAKE_OSX_DEPLOYMENT_TARGET="12.3"
       - name: Create tar
-        run: tar -czvf bin/macos-development.tar.gz bin/macos-development
+        run: cd bin/macos-development && tar -czvf ../macos-development.tar.gz RadishRuntime.app
       - uses: actions/upload-artifact@v4
         with:
           name: macos-development
-          path: bin/macos-development.tar.gz
+          path: bin/macos-development/macos-development.tar.gz
