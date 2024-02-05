@@ -50,7 +50,7 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
     add_custom_command(TARGET RadishRuntime
         PRE_BUILD
-        COMMAND convert -background none "radish.svg" -resize 256x256 "${CMAKE_CURRENT_BINARY_DIR}/radish.ico"
+        COMMAND magick convert -background none "radish.svg" -resize 256x256 "${CMAKE_CURRENT_BINARY_DIR}/radish.ico"
         WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
     )
 
