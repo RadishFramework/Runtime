@@ -1,9 +1,7 @@
 @echo off
 
-setlocal ENABLEDELAYEDEXPANSION
-
 REM If we're doing a CI build, then do a development build instead
-if %RADISH_CI_BUILD%=="1" (
+if %RADISH_CI_BUILD%==1 (
     set BUILD_TYPE="win64-development"
 ) else (
     set BUILD_TYPE="win64-release"
