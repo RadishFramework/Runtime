@@ -14,6 +14,7 @@ set(Radish_Private_SRCS
 
 set(Radish_HERMES_LIBS
 libhermes
+jsi
 )
 
 add_library(RadishFramework STATIC ${Radish_Public_SRCS} ${Radish_Private_SRCS})
