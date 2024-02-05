@@ -1,6 +1,6 @@
 #include "winres.h"
 
-IDI_ICON1 ICON "radish.ico"
+IDI_ICON1 ICON "@CMAKE_CURRENT_BINARY_DIR@/radish.ico"
 
 LANGUAGE LANG_ENGLISH, SUBLANG_DEFAULT
 

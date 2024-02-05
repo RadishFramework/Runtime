@@ -11,7 +11,7 @@ if (APPLE)
     set(CMAKE_CXX_COMPILER ${RADISH_XCODE_CLANGPP_PATH})
 endif()
 
-project(RadishFramework VERSION 1.0.0 LANGUAGES C CXX)
+project(RadishFramework VERSION 1.0.0.0 LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED true)
