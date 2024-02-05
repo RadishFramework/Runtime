@@ -25,6 +25,7 @@ jobs:
           submodules: recursive
       - name: Install required packages
         run: choco install ninja
+      - uses: ilammy/msvc-dev-cmd@v1
       - name: Run make script
         run: cmd /c make_release_win64.cmd
       - uses: actions/upload-artifact@v4
@@ -43,7 +44,7 @@ jobs:
       - name: Install required packages
         run: brew install ninja
       - name: Run make script
-        run: ./make_release_macos.sh -DCMAKE_OSX_DEPLOYMENT_TARGET="14.0"
+        run: ./make_release_macos.sh -DCMAKE_OSX_DEPLOYMENT_TARGET="12.3"
       - uses: actions/upload-artifact@v4
         with:
           name: macos-development
