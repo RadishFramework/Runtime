@@ -8,10 +8,15 @@ endif()
 message(STATUS "-------- START VENDOR CONFIG -----------")
 
 message(STATUS "-------- SDL2 -----------")
-add_subdirectory("SDL")
 
-set(SDL2_LIBRARIES SDL2::SDL2 PARENT_SCOPE)
-set(SDL2_INCLUDE_DIRS "SDL/include")
+# On macOS we build SDL2 ourselves (to get it as a universal binary)
+if (APPLE)
+    add_subdirectory("SDL")
+    set(SDL2_LIBRARIES SDL2::SDL2 PARENT_SCOPE)
+    set(SDL2_INCLUDE_DIRS "SDL/include")
+else()
+    find_package(SDL2 CONFIG REQUIRED)
+endif()
 
 message(STATUS "-------- fmt -----------")
 option(FMT_INSTALL "" OFF)
