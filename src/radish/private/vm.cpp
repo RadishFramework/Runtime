@@ -1,16 +1,21 @@
 #include "radish/vm.hpp"
 
+using namespace hermes;
+
 namespace radish {
 
 virtual_machine::create_error virtual_machine::create() {
 
-    wasmtime::Config cfg{};
-    cfg.debug_info(true);
+    auto cfg = vm::RuntimeConfig::Builder()
+        .withEnableEval(false)
+        .build();
 
-    virtual_machine* vm = new virtual_machine();
-    vm->_engine = new wasmtime::Engine(std::move(cfg));
+    auto runtime = fbhm::makeHermesRuntime(cfg);
 
-    return create_error{vm};
+    auto vm = std::unique_ptr<virtual_machine>(new virtual_machine());
+    vm->_runtime = std::move(runtime);
+
+    return create_error{std::move(vm)};
 }
 
 }

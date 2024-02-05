@@ -2,7 +2,7 @@
 
 #include <SDL2/SDL.h>
 
-using namespace radish;
+namespace radish {
 
 int run(int argc, char* argv[]) {
     auto appInit = application::create(application::init_params{ 
@@ -21,6 +21,8 @@ int run(int argc, char* argv[]) {
     return 0;
 }
 
+}
+
 int main(int argc, char* argv[]) {
     SDL_version v{};
     SDL_GetVersion(&v);
@@ -31,7 +33,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    auto exitCode = run(argc, argv);
+    auto exitCode = radish::run(argc, argv);
 
     SDL_Quit();
 

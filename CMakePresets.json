@@ -11,6 +11,7 @@
             "hidden": true,
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/${presetName}",
+            "installDir": "${sourceDir}/release/${presetName}",
             "cacheVariables": {
                 "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/bin/${presetName}"
             }

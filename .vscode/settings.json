@@ -66,6 +66,14 @@
         "unordered_map": "cpp",
         "variant": "cpp",
         "vector": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "cinttypes": "cpp",
+        "condition_variable": "cpp",
+        "csetjmp": "cpp",
+        "csignal": "cpp",
+        "future": "cpp",
+        "regex": "cpp",
+        "thread": "cpp",
+        "unordered_set": "cpp"
     }
 }
