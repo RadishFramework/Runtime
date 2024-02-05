@@ -9,11 +9,11 @@ set(SDL2_LIBRARIES SDL2::SDL2 PARENT_SCOPE)
 set(SDL2_INCLUDE_DIRS "SDL/include")
 
 message(STATUS "-------- fmt -----------")
-set(FMT_INSTALL OFF)
+option(FMT_INSTALL "" OFF)
 add_subdirectory("fmt")
 
 message(STATUS "-------- Hermes -----------")
-set(HERMES_BUILD_APPLE_FRAMEWORK OFF)
-add_subdirectory("hermes")
+option(HERMES_BUILD_APPLE_FRAMEWORK "" OFF)
+add_subdirectory("hermes" EXCLUDE_FROM_ALL)
 
 message(STATUS "-------- END VENDOR CONFIG -----------")

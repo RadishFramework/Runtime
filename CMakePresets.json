@@ -11,11 +11,49 @@
             "hidden": true,
             "generator": "Ninja",
             "binaryDir": "${sourceDir}/build/${presetName}",
-            "installDir": "${sourceDir}/release/${presetName}",
+            "installDir": "${sourceDir}/bin/${presetName}"
+        },
+
+        {
+            "name": "win64-base",
+            "inherits": "all-base",
+            "hidden": true,
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
             "cacheVariables": {
-                "CMAKE_RUNTIME_OUTPUT_DIRECTORY": "${sourceDir}/bin/${presetName}"
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl"
             }
         },
+        {
+            "name": "win64-debug",
+            "displayName": "Windows x64 Debug",
+            "inherits": "win64-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "RADISH_ENABLE_ASSERTIONS": true
+            }
+        },
+        {
+            "name": "win64-development",
+            "displayName": "Windows x64 Development",
+            "inherits": "win64-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "RelWithDebInfo",
+                "RADISH_ENABLE_ASSERTIONS": true
+            }
+        },
+        {
+            "name": "win64-release",
+            "displayName": "Windows x64 Release",
+            "inherits": "win64-base",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+
         {
             "name": "macos-base",
             "inherits": "all-base",
@@ -46,13 +84,28 @@
             "name": "macos-release",
             "displayName": "macOS Universal Release",
             "inherits": "macos-base",
-            "generator": "Xcode",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
         }
     ],
     "buildPresets": [
+        {
+            "name": "win64-debug",
+            "displayName": "Windows x64 Debug",
+            "configurePreset": "win64-debug"
+        },
+        {
+            "name": "win64-development",
+            "displayName": "Windows x64 Development",
+            "configurePreset": "win64-development"
+        },
+        {
+            "name": "win64-release",
+            "displayName": "Windows x64 Release",
+            "configurePreset": "win64-release"
+        },
+
         {
             "name": "macos-debug",
             "displayName": "macOS Universal Debug",
