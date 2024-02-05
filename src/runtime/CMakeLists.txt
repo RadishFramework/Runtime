@@ -48,6 +48,9 @@ if (APPLE)
     install(CODE "execute_process(COMMAND codesign -s \"-\" --deep $<TARGET_FILE_BASE_NAME:RadishRuntime>.app WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX})")
 elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
+    configure_file("windows/radish.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/radish.rc" @ONLY)
+    target_sources(RadishRuntime PRIVATE "windows/app.manifest" "${CMAKE_CURRENT_BINARY_DIR}/radish.rc")
+
     add_custom_command(TARGET RadishRuntime
         PRE_BUILD
         COMMAND magick convert -background none "radish.svg" -resize 256x256 "${CMAKE_CURRENT_BINARY_DIR}/radish.ico"
