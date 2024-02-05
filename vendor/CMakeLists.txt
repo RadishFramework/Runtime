@@ -1,5 +1,10 @@
 cmake_policy(SET CMP0077 NEW)
 
+# Sorry but this ain't my problem
+if (${CMAKE_CXX_COMPILER_ID} MATCHES "GNU" OR "Clang")
+    add_compile_definitions("-Wno-deprecated-declarations")
+endif()
+
 message(STATUS "-------- START VENDOR CONFIG -----------")
 
 message(STATUS "-------- SDL2 -----------")
