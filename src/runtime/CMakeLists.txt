@@ -44,7 +44,6 @@ elseif (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     foreach(_LIB ${Runtime_LIBS_TO_FIX})
         install(FILES "$<TARGET_FILE:${_LIB}>" DESTINATION .)
     endforeach()
-    install(TARGETS hermesc DESTINATION .)
 
     configure_file("windows/radish.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/radish.rc" @ONLY)
     target_sources(RadishRuntime PRIVATE "windows/app.manifest" "${CMAKE_CURRENT_BINARY_DIR}/radish.rc")
