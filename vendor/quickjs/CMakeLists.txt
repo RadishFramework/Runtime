@@ -3,12 +3,12 @@ project(QuickJS LANGUAGES C)
 option(QUICKJS_ENABLE_BIGNUM "Enable BigNum support" ON)
 
 set(QUICKJS_SRCS
-"src/quickjs.c"
-"src/libregexp.c"
-"src/libunicode.c"
-"src/cutils.c"
-"src/quickjs-libc.c"
-"src/libbf.c"
+"quickjs/quickjs.c"
+"quickjs/libregexp.c"
+"quickjs/libunicode.c"
+"quickjs/cutils.c"
+"quickjs/quickjs-libc.c"
+"quickjs/libbf.c"
 )
 
 add_library(QuickJS STATIC ${QUICKJS_SRCS})
@@ -17,10 +17,11 @@ if (QUICKJS_ENABLE_BIGNUM)
     target_compile_definitions(QuickJS PUBLIC "CONFIG_BIGNUM=1")
 endif()
 
-file(READ "src/VERSION" QUICKJS_VERSION)
+file(READ "quickjs/VERSION" QUICKJS_VERSION)
+string(STRIP ${QUICKJS_VERSION} QUICKJS_VERSION)
 
 target_compile_definitions(QuickJS PRIVATE "CONFIG_VERSION=\"${QUICKJS_VERSION}\"")
-target_link_directories(QuickJS PUBLIC "src")
+target_include_directories(QuickJS PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")
 
 if (${CMAKE_C_COMPILER_ID} MATCHES "Clang")
     target_compile_options(QuickJS PRIVATE
@@ -49,4 +50,5 @@ if (NOT MSVC)
     target_compile_options(QuickJS PRIVATE "-fwrapv")
 endif()
 
+message(STATUS "Version: ${QUICKJS_VERSION}")
 message(STATUS "BigNum support: ${QUICKJS_ENABLE_BIGNUM}")
