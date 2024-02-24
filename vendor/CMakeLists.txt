@@ -22,8 +22,7 @@ message(STATUS "-------- fmt -----------")
 option(FMT_INSTALL "" OFF)
 add_subdirectory("fmt")
 
-message(STATUS "-------- Hermes -----------")
-option(HERMES_BUILD_APPLE_FRAMEWORK "" OFF)
-add_subdirectory("hermes" EXCLUDE_FROM_ALL)
+message(STATUS "-------- QuickJS -----------")
+add_subdirectory("quickjs" EXCLUDE_FROM_ALL)
 
 message(STATUS "-------- END VENDOR CONFIG -----------")

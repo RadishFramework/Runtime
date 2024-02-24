@@ -15,13 +15,9 @@ set_target_properties(RadishRuntime PROPERTIES
     MACOSX_BUNDLE_COPYRIGHT "Copyright (c) Audrey Castillo. All rights reserved."
 )
 
-# We use hermesc to compile js code
-add_dependencies(RadishRuntime hermesc)
-
 install(TARGETS RadishRuntime DESTINATION .)
 
 set(Runtime_LIBS_TO_FIX
-libhermes
 SDL2
 )
 
@@ -39,9 +35,6 @@ if (APPLE)
     foreach(_LIB ${Runtime_LIBS_TO_FIX})
         install(FILES "$<TARGET_FILE:${_LIB}>" DESTINATION "$<TARGET_FILE_BASE_NAME:RadishRuntime>.app/Contents/Frameworks")
     endforeach()
-
-    # Copy the hermes compiler to the app bundle
-    install(TARGETS hermesc DESTINATION "$<TARGET_FILE_BASE_NAME:RadishRuntime>.app/Contents/MacOS")
 
     # Codesign the bundle
     # TODO: use provided codesign credentials if available
